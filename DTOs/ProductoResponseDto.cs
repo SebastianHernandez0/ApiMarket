@@ -8,8 +8,8 @@
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string Image { get; set; } = string.Empty;
-        
-        public UsuarioResponseDto Usuario { get; set; } = new UsuarioResponseDto();
-        public CategoriaResponseDto Category { get; set; } = new CategoriaResponseDto();
+
+        public UsuarioResponseDto Usuario { get; set; } 
+        public CategoriaResponseDto Category { get; set; }
     }
 }
