@@ -1,5 +1,6 @@
 using ApiMarket.DTOs;
 using ApiMarket.Models;
+using ApiMarket.Services;
 using ApiMarket.Validators;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddScoped<ICommonService<ProductoResponseDto, ProductoRequestDto, ProductoRequestDto>, ProductService>();
 
 //Entity Framework
 
@@ -54,7 +55,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options=>
+{
+    options.AddPolicy("ApiScope", policy => policy.RequireAuthenticatedUser());
+});
 
 
 
@@ -84,6 +88,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
